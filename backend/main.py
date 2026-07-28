@@ -1,7 +1,9 @@
 from fastapi import FastAPI, Depends, HTTPException
-from sqlmodel import Session, select, func
+from sqlmodel import Session, select, func, and_
 from database import get_db
 from  models import Category, CategoryCreate, Expense, ExpenseCreate, CategorySummary
+from typing import Optional
+from datetime import date
 
 from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
@@ -38,7 +40,7 @@ def create_expense(expense: ExpenseCreate, db : Session = Depends(get_db)):
     db_expense = Expense(
         amount = expense.amount,
         description = expense.description,
-        date=expense.expense_date,
+        expense_date=expense.expense_date,
         category_id=expense.category_id
     )
     db.add(db_expense)
@@ -47,13 +49,22 @@ def create_expense(expense: ExpenseCreate, db : Session = Depends(get_db)):
     return db_expense
 
 @app.get("/summary", response_model=list[CategorySummary])
-def get_summary(db: Session = Depends(get_db)):
+def get_summary(
+    db: Session = Depends(get_db),
+    start_date: Optional[date] = None,
+    end_date: Optional[date] = None):
+    join_conditions = [Expense.category_id == Category.id]
+
+    if start_date:
+        join_conditions.append(Expense.expense_date >= start_date)
+    if end_date:
+        join_conditions.append(Expense.expense_date <= end_date)
     statement = (
         select(
             Category.name,
             func.coalesce(func.sum(Expense.amount), 0).label("total_amount")
         )
-        .join(Expense, Expense.category_id == Category.id, isouter=True)
+        .join(Expense, and_(*join_conditions), isouter=True)
         .group_by(Category.name)
         .order_by(Category.name)
     )
@@ -128,4 +139,4 @@ def update_category(category_id: int, category_data: CategoryCreate, db  : Sessi
     db.add(category)
     db.commit()
     db.refresh(category)
-    return category
+    return category 
