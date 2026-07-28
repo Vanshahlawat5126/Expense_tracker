@@ -144,7 +144,7 @@ function ExpenseList({categories, onExpenseAdded}) {
       </>
     ) : (
       <>
-        {expense.description} — ${expense.amount}
+        {expense.description} — ₹{expense.amount}
         <button onClick={() => startEdit(expense)}>Edit</button>
         <button onClick={() => handleDelete(expense.id)}>Delete</button>
       </>
