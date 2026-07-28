@@ -1,0 +1,1 @@
+if (!res.ok) throw new Error(...) — fetch does not reject its promise on HTTP error statuses (404, 405, 422, etc.) — only on network-level failures (like the server being unreachable). So a 422 validation error from FastAPI would silently flow through .then() as if it succeeded, unless you explicitly check res.ok and throw yourself.
