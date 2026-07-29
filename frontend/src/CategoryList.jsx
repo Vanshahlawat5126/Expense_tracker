@@ -86,42 +86,48 @@ function CategoryList({categories, onCategoryAdded}) {
   }
 
   return (
-    <div>
-      <h2>Categories</h2>
-      <ul>
+    <div className="panel">
+      <h2 className="panel-title">Categories</h2>
+      <ul className="item-list">
         {categories.map((cat) => (
-          <li key={cat.id}>
+          <li key={cat.id} className="item-row">
             {editingId === cat.id ? (
               <>
                 <input
                   type="text"
+                  className="input edit-input"
                   value={editName}
                   onChange={(e) => setEditName(e.target.value)}
                 />
-                <button onClick={() => handleUpdate(cat.id)}>Save</button>
-                <button onClick={() => setEditingId(null)}>Cancel</button>
+                <div className="row-actions">
+                  <button className="btn btn-primary" onClick={() => handleUpdate(cat.id)}>Save</button>
+                  <button className="btn btn-ghost" onClick={() => setEditingId(null)}>Cancel</button>
+                </div>
               </>
             ) : (
               <>
-                {cat.name}
-                <button onClick={() => startEdit(cat)}>Edit</button>
-                <button onClick={() => handleDelete(cat.id)}>Delete</button>
+                <span className="item-label">{cat.name}</span>
+                <div className="row-actions">
+                  <button className="btn btn-ghost" onClick={() => startEdit(cat)}>Edit</button>
+                  <button className="btn btn-danger" onClick={() => handleDelete(cat.id)}>Delete</button>
+                </div>
               </>
             )}
           </li>
         ))}
       </ul>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="add-form">
         <input
           type="text"
+          className="input"
           value={newName}
           onChange={(e) => setNewName(e.target.value)}
           placeholder="New category name"
         />
-        <button type="submit">Add Category</button>
+        <button type="submit" className="btn btn-primary">Add Category</button>
       </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className="error-text">{error}</p>}
     </div>
   );
 }

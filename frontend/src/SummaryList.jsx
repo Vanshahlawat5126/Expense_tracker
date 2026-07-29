@@ -1,23 +1,25 @@
 function SummaryList({summary}){
     return(
-    <div>
-        <h2>Summary</h2>
-        <ul
-        style={{
-          maxHeight: '200px',
-          overflowY: 'auto',
-          border: '1px solid #ccc',
-          padding: '8px',
-        }}
-      >
-        {summary.map((item) => (
-          <li key={item.category_name}>
-            {item.category_name} — ₹{item.total_amount}
-          </li>
-        ))}
-      </ul>
-
-
+    <div className="panel">
+        <h2 className="panel-title">Summary</h2>
+        <div className="summary-table-wrap">
+          <table className="summary-table">
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {summary.map((item) => (
+                <tr key={item.category_name} className={item.total_amount == 0 ? 'row-empty' : ''}>
+                  <td>{item.category_name}</td>
+                  <td>₹{item.total_amount}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
     </div>)
 }
 

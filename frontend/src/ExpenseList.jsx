@@ -109,53 +109,64 @@ function ExpenseList({categories, onExpenseAdded}) {
     
 
     return (
-         <div>
-      <h2>Expenses</h2>
-      <ul>
+    <div className="panel">
+      <h2 className="panel-title">Expenses</h2>
+      <ul className="item-list">
         {expenses.map((expense) => (
-  <li key={expense.id}>
-    {editingId === expense.id ? (
-      <>
-        <input
-          type="number"
-          value={editFormData.amount}
-          onChange={(e) => setEditFormData({ ...editFormData, amount: e.target.value })}
-        />
-        <input
-          type="text"
-          value={editFormData.description}
-          onChange={(e) => setEditFormData({ ...editFormData, description: e.target.value })}
-        />
-        <input
-          type="date"
-          value={editFormData.expense_date}
-          onChange={(e) => setEditFormData({ ...editFormData, expense_date: e.target.value })}
-        />
-        <select
-          value={editFormData.category_id}
-          onChange={(e) => setEditFormData({ ...editFormData, category_id: e.target.value })}
-        >
-          {categories.map((cat) => (
-            <option key={cat.id} value={cat.id}>{cat.name}</option>
-          ))}
-        </select>
-        <button onClick={() => handleUpdate(expense.id)}>Save</button>
-        <button onClick={() => setEditingId(null)}>Cancel</button>
-      </>
-    ) : (
-      <>
-        {expense.description} — ₹{expense.amount}
-        <button onClick={() => startEdit(expense)}>Edit</button>
-        <button onClick={() => handleDelete(expense.id)}>Delete</button>
-      </>
-    )}
-  </li>
-))}
+          <li key={expense.id} className="item-row">
+            {editingId === expense.id ? (
+              <>
+                <div className="edit-fields">
+                  <input
+                    type="number"
+                    className="input edit-input edit-input-sm"
+                    value={editFormData.amount}
+                    onChange={(e) => setEditFormData({ ...editFormData, amount: e.target.value })}
+                  />
+                  <input
+                    type="text"
+                    className="input edit-input"
+                    value={editFormData.description}
+                    onChange={(e) => setEditFormData({ ...editFormData, description: e.target.value })}
+                  />
+                  <input
+                    type="date"
+                    className="input edit-input"
+                    value={editFormData.expense_date}
+                    onChange={(e) => setEditFormData({ ...editFormData, expense_date: e.target.value })}
+                  />
+                  <select
+                    className="input edit-input"
+                    value={editFormData.category_id}
+                    onChange={(e) => setEditFormData({ ...editFormData, category_id: e.target.value })}
+                  >
+                    {categories.map((cat) => (
+                      <option key={cat.id} value={cat.id}>{cat.name}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="row-actions">
+                  <button className="btn btn-primary" onClick={() => handleUpdate(expense.id)}>Save</button>
+                  <button className="btn btn-ghost" onClick={() => setEditingId(null)}>Cancel</button>
+                </div>
+              </>
+            ) : (
+              <>
+                <span className="item-label">{expense.description} — ₹{expense.amount}</span>
+                <div className="row-actions">
+                  <button className="btn btn-ghost" onClick={() => startEdit(expense)}>Edit</button>
+                  <button className="btn btn-danger" onClick={() => handleDelete(expense.id)}>Delete</button>
+                </div>
+              </>
+            )}
+          </li>
+        ))}
       </ul>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="add-form">
         <input
           type="text"
+          className="input"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Description"
@@ -163,11 +174,12 @@ function ExpenseList({categories, onExpenseAdded}) {
         <input
           type="number"
           step="0.01"
+          className="input"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
           placeholder="Amount"
         />
-        <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)}>
+        <select className="input" value={categoryId} onChange={(e) => setCategoryId(e.target.value)}>
           <option value="">Select category</option>
           {categories.map((cat) => (
             <option key={cat.id} value={cat.id}>
@@ -177,14 +189,14 @@ function ExpenseList({categories, onExpenseAdded}) {
         </select>
         <input
           type="date"
+          className="input"
           value={date}
           onChange={(e) => setDate(e.target.value)}
         />
-        <button type="submit">Add Expense</button>
+        <button type="submit" className="btn btn-primary">Add Expense</button>
       </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && <p className="error-text">{error}</p>}
     </div>
     );
 }
-
 export default ExpenseList;
