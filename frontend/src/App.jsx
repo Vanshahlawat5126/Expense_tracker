@@ -72,20 +72,25 @@ function App() {
  
 
   return (
-    <div>
-      <h1>Expense Tracker</h1>
-      <CategoryList 
-      categories={categories}
-      onCategoryAdded={fetchCategories}
-      />
-      <ExpenseList categories={categories}  onExpenseAdded={refreshSummary} />
-      <div>
-        {/* the disabled here diables the btn after user has clicked it once to prevent unneccesory re-renders */}
-        <button onClick={() => applyPreset('all')} disabled={activePreset === 'all' } >All Time</button>
-        <button onClick={() => applyPreset('month')} disabled={activePreset === 'month' } >This Month</button>
-        <button onClick={() => applyPreset('30days')} disabled={activePreset === '30days' } >Last 30 Days</button>
+    <div className="app">
+      <h1 className="app-title">Expense Tracker</h1>
+
+      <div className="panels">
+        <CategoryList 
+          categories={categories}
+          onCategoryAdded={fetchCategories}
+        />
+        <ExpenseList categories={categories} onExpenseAdded={refreshSummary} />
       </div>
-      <SummaryList summary={summary} />
+
+      <section className="summary-section">
+        <div className="preset-bar">
+          <button onClick={() => applyPreset('all')} disabled={activePreset === 'all'}>All Time</button>
+          <button onClick={() => applyPreset('month')} disabled={activePreset === 'month'}>This Month</button>
+          <button onClick={() => applyPreset('30days')} disabled={activePreset === '30days'}>Last 30 Days</button>
+        </div>
+        <SummaryList summary={summary} />
+      </section>
     </div>
   );
 }
