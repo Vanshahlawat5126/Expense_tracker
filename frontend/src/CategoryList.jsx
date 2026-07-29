@@ -15,7 +15,7 @@ function CategoryList({categories, onCategoryAdded}) {
       return;
     }
 
-    fetch('http://localhost:8000/categories', {
+    fetch(`${import.meta.env.VITE_API_URL}/categories`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name: newName.trim() }),
@@ -46,7 +46,7 @@ function CategoryList({categories, onCategoryAdded}) {
     }
 
     try {
-      const res = await fetch(`http://localhost:8000/categories/${categoryId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/categories/${categoryId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: editName.trim() }),
@@ -71,7 +71,7 @@ function CategoryList({categories, onCategoryAdded}) {
     if (!confirmed) return;
 
     try {
-      const res = await fetch(`http://localhost:8000/categories/${categoryId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/${categoryId}`, {
         method: 'DELETE',
       });
 

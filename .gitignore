@@ -15,3 +15,6 @@ dist/
 # --- Editor / OS clutter ---
 .vscode/
 .DS_Store
+
+# add to existing .gitignore
+frontend/.env

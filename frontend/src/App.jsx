@@ -11,14 +11,14 @@ function App() {
   // active Preset tracks which filter is currently applied from "all, month, or 30 days"
 
   function fetchCategories() {
-    fetch("http://localhost:8000/categories")
+    fetch(`${import.meta.env.VITE_API_URL}/categories`)
     .then ((res)=>res.json())
     .then((data) => setCategories(data));
   }
  
 
   function fetchSummary(startDate, endDate) {
-    let url = "http://localhost:8000/summary";
+    let url = `${import.meta.env.VITE_API_URL}/summary`;
     const params = new URLSearchParams();
     // URLSearchParams id built-in javascript class that is used to work with URL query parameters (the part of a URL after the ?).
 

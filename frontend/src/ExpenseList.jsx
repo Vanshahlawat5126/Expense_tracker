@@ -18,7 +18,7 @@ function ExpenseList({categories, onExpenseAdded}) {
 
 
     function fetchExpenses(){
-        fetch('http://localhost:8000/expenses')
+        fetch(`${import.meta.env.VITE_API_URL}/expenses`)
         .then((res) => res.json())
         .then((data) => setExpenses(data));
     }
@@ -32,7 +32,7 @@ function ExpenseList({categories, onExpenseAdded}) {
             setError('All fields are required');
             return;
         }
-        fetch('http://localhost:8000/expenses', {
+        fetch(`${import.meta.env.VITE_API_URL}/expenses`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
@@ -63,7 +63,7 @@ function ExpenseList({categories, onExpenseAdded}) {
 
     async function handleDelete(expenseId){
         try{
-            const res = await fetch(`http://localhost:8000/expenses/${expenseId}`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/expenses/${expenseId}`, {
                 method: 'DELETE',
             });
             if(!res.ok){
@@ -89,7 +89,7 @@ function ExpenseList({categories, onExpenseAdded}) {
 
     async function handleUpdate(expenseId) {
   try {
-    const res = await fetch(`http://localhost:8000/expenses/${expenseId}`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/expenses/${expenseId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(editFormData),
