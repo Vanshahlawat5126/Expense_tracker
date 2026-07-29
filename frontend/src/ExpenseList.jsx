@@ -39,7 +39,7 @@ function ExpenseList({categories, onExpenseAdded}) {
                 description: description.trim(), 
                 amount: parseFloat(amount), 
                 category_id: parseInt(categoryId),
-                 date: date
+                expense_date: date
                  }),
         })
 
